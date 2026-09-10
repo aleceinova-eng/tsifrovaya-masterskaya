@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ваш бизнес в интернете — Цифровая мастерская</title>
+<style>
+  :root {
+    --bg: #12181f;
+    --bg-card: #1a232c;
+    --accent: #c9a15b;
+    --accent-light: #ddb876;
+    --text: #f2ede1;
+    --text-soft: #a9a297;
+    --border: #2a333d;
+    --on-accent: #12181f;
+    --accent-pop: #e8a53f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; scroll-margin-top: 62px; }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--on-accent);
+    text-decoration: none;
+    padding: 15px 32px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 14px rgba(201,161,91,0.25);
+  }
+  .cta-btn:hover { background: var(--accent-pop); transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 24px rgba(232,165,63,0.45); }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(18,24,31,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 920px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; font-family: Georgia, serif; color: var(--accent); font-size: 17px; font-weight: 700; text-decoration: none; }
+  .nav-logo svg { flex-shrink: 0; }
+  .nav-back { color: var(--text-soft); text-decoration: none; font-size: 14px; }
+  .nav-back:hover { color: var(--accent); }
+
+  /* Обложка */
+  .hero {
+    min-height: 62vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, #12181f, #1a2029, #201a12, #1a2029, #12181f);
+    background-size: 400% 400%;
+    animation: heroGradient 18s ease infinite;
+    padding-top: 90px;
+  }
+  @keyframes heroGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .hero > .container { position: relative; z-index: 1; }
+  .eyebrow { color: var(--accent); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; }
+  .hero h1 {
+    font-size: clamp(30px, 5vw, 46px);
+    color: var(--text);
+    margin-bottom: 20px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 em { color: var(--accent); font-style: normal; }
+  .hero p {
+    font-size: 18px;
+    color: var(--text-soft);
+    max-width: 560px;
+    margin: 0 auto 34px;
+  }
+
+  /* Присутствие */
+  .intro { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .intro h2 { color: var(--text); font-size: 26px; margin-bottom: 20px; }
+  .intro p { font-size: 17px; color: var(--text-soft); max-width: 680px; margin-bottom: 14px; }
+  .intro p strong { color: var(--text); font-weight: 600; }
+
+  /* Услуги */
+  .services h2 { color: var(--text); font-size: 26px; margin-bottom: 36px; text-align: center; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(201,161,91,0.12); }
+  .card .icon { font-size: 26px; margin-bottom: 14px; display: block; }
+  .card h3 { font-size: 18px; color: var(--text); margin-bottom: 10px; }
+  .card p { font-size: 14.5px; color: var(--text-soft); }
+
+  /* FAQ */
+  .faq { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .faq h2 { color: var(--text); font-size: 26px; margin-bottom: 32px; text-align: center; }
+  .faq-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .faq-item h3 { font-family: -apple-system, "Segoe UI", Arial, sans-serif; font-size: 16px; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .faq-item p { font-size: 14.5px; color: var(--text-soft); }
+
+  /* CTA финальный */
+  .final-cta { text-align: center; }
+  .final-cta h2 { color: var(--text); font-size: 26px; margin-bottom: 28px; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .contact-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-secondary {
+    display: inline-block;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    padding: 13px 30px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .btn-secondary:hover { background: var(--accent-pop); border-color: var(--accent-pop); color: var(--on-accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(232,165,63,0.35); }
+
+  footer {
+    text-align: center;
+    padding: 40px 24px 32px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-logo {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .footer-logo span { font-family: Georgia, serif; font-size: 16px; color: var(--text); font-weight: 700; }
+  footer .tagline { font-size: 13px; color: var(--text-soft); margin-bottom: 6px; }
+  footer .copyright { font-size: 12px; color: var(--text-soft); opacity: 0.7; }
+
+  @media (max-width: 600px) {
+    section { padding: 52px 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg width="34" height="34" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="28" cy="28" r="27" fill="#c9a15b"/>
+        <text x="28" y="36" font-family="Georgia, serif" font-style="italic" font-size="21" font-weight="700" fill="#12181f" text-anchor="middle">ЦМ</text>
+      </svg>
+      Цифровая мастерская
+    </a>
+    <a href="index.html" class="nav-back">← Все проекты</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Присутствие в интернете</div>
+    <h1>Ваш бизнес <em>в интернете</em></h1>
+    <p>Карточки на Яндекс.Картах, 2ГИС и Авито + понятный сайт — чтобы клиенты находили вас первыми, а не конкурентов</p>
+    <a href="https://t.me/PartnovS" class="cta-btn" target="_blank">Обсудить проект</a>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="container">
+    <h2>Присутствие в интернете — это не сложно</h2>
+    <p>Многие небольшие компании теряют клиентов просто потому, что их не видно там, где люди ищут услуги: в картах, в объявлениях, на сайте.</p>
+    <p><strong>Я помогаю привести всё это в порядок</strong> — оформляю карточки компании, готовлю объявление и создаю современный сайт, чтобы вам было проще найти и выбрать именно вас.</p>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="container">
+    <h2>Чем я могу помочь</h2>
+    <div class="cards">
+      <div class="card">
+        <span class="icon">📍</span>
+        <h3>Яндекс Карты</h3>
+        <p>Оформление карточки компании: информация, фотографии и описание услуг, чтобы клиенты легко находили вас на карте.</p>
+      </div>
+      <div class="card">
+        <span class="icon">📍</span>
+        <h3>2ГИС</h3>
+        <p>Оформление информации о компании в 2ГИС — актуальные данные, контакты и описания, которые помогают клиентам быстрее принять решение.</p>
+      </div>
+      <div class="card">
+        <span class="icon">📣</span>
+        <h3>Авито</h3>
+        <p>Подготовка объявления: понятный текст, структура и оформление, которые привлекают внимание клиентов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="container">
+    <h2>Часто задаваемые вопросы</h2>
+    <div class="faq-item">
+      <h3>Сколько стоит создание сайта?</h3>
+      <p>Есть несколько вариантов — от простой страницы с основной информацией до более полного сайта с услугами, фотографиями, портфолио и формами связи. Стоимость зависит от объёма работ и согласовывается до начала проекта.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Что входит в создание сайта?</h3>
+      <p>Структура страницы, тексты, оформление, размещение информации об услугах, ценах, фотографиях и способах связи. При необходимости помогаю подготовить материалы и привести их к единому виду.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Можно ли заказать только размещение бизнеса на картах и Авито?</h3>
+      <p>Да. Можно заказать стандартные услуги или комплексное продвижение бизнеса в интернете — сайт, Яндекс Карты, 2ГИС и Авито.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Как проходит работа?</h3>
+      <p>Сначала обсуждаем ваш бизнес, услуги и задачи. Затем собираем материалы, согласовываем структуру и оформление, после создаём и проверяем готовую страницу. Все основные решения согласовываются с вами.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Как организуется работа и оплата?</h3>
+      <p>Работа оформляется официально в соответствии с выбранным форматом сотрудничества. Условия, стоимость и порядок оплаты согласовываются заранее.</p>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="container">
+    <h2>Давайте посмотрим, что можно сделать именно для вашего бизнеса</h2>
+    <div class="contact-btns">
+      <a href="https://t.me/PartnovS" class="cta-btn" target="_blank">Написать в Telegram</a>
+      <a href="https://max.ru/u/f9LHodD0cOJIfCF3_1gyi-zCMaKWBz30MJ4co_bRHtlSNEfmd2oO8fljGqw" class="btn-secondary" target="_blank">Написать в MAX</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <svg width="28" height="28" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="28" cy="28" r="27" fill="#c9a15b"/>
+      <text x="28" y="36" font-family="Georgia, serif" font-style="italic" font-size="21" font-weight="700" fill="#12181f" text-anchor="middle">ЦМ</text>
+    </svg>
+    <span>Цифровая мастерская</span>
+  </div>
+  <p class="tagline">Ваш бизнес в интернете — карточки, объявления и сайты для малого бизнеса</p>
+  <p class="copyright">© 2026</p>
+</footer>
+
+</body>
+</html>

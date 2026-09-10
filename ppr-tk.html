@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Разработка ППР и технологических карт — инженер ПТО</title>
+<style>
+  :root{
+    --navy-dark:#0f172a;
+    --navy:#1e3a8a;
+    --blue:#2563eb;
+    --gold:#b45309;
+    --gold-soft:#fef3c7;
+    --bg:#f8fafc;
+    --card:#ffffff;
+    --border:#e2e8f0;
+    --text:#334155;
+    --text-dark:#0f172a;
+    --text-soft:#64748b;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height:1.6;
+    color:var(--text);
+    background:var(--bg);
+  }
+
+  header{
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color:#fff;
+    padding:56px 20px 40px;
+  }
+  .header-container{ max-width:1000px; margin:0 auto; }
+  .badge{
+    display:inline-block;
+    font-size:.78rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.25);
+    padding:6px 14px;
+    border-radius:100px;
+    margin-bottom:18px;
+  }
+  header h1{ font-size:clamp(1.8rem,4vw,2.4rem); font-weight:700; margin-bottom:14px; letter-spacing:-.5px; text-wrap:balance; }
+  header p.lead{ font-size:1.08rem; opacity:.88; max-width:640px; margin-bottom:28px; }
+
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-bottom:28px;
+  }
+  @media (max-width:640px){ .stats{ grid-template-columns:1fr; } }
+  .stat{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .stat b{ display:block; font-size:1.2rem; }
+  .stat span{ font-size:.85rem; opacity:.8; }
+
+  .cta-buttons{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 24px; border-radius:8px;
+    font-size:1rem; font-weight:600; text-decoration:none;
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
+  }
+  .btn-phone{ background:var(--blue); color:#fff; }
+  .btn-telegram{ background:#0088cc; color:#fff; }
+
+  .container{ max-width:1000px; margin:0 auto; padding:40px 20px; }
+
+  .grid-2{ display:grid; grid-template-columns:1.1fr 1fr; gap:24px; margin-bottom:24px; }
+  @media (max-width:760px){ .grid-2{ grid-template-columns:1fr; } }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:28px;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+  }
+  .card h2{
+    font-size:1.25rem; color:var(--text-dark);
+    margin-bottom:18px; padding-bottom:10px;
+    border-bottom:3px solid var(--blue);
+    display:inline-block;
+  }
+
+  table.prices{ width:100%; border-collapse:collapse; }
+  table.prices td{ padding:12px 0; border-top:1px solid var(--border); vertical-align:top; }
+  table.prices tr:first-child td{ border-top:none; }
+  table.prices .svc-name{ font-weight:600; color:var(--text-dark); }
+  table.prices .svc-desc{ font-size:.85rem; color:var(--text-soft); }
+  table.prices .svc-price{ text-align:right; font-weight:700; color:var(--gold); white-space:nowrap; padding-left:12px; }
+
+  .tag-group{ margin-bottom:16px; }
+  .tag-group:last-child{ margin-bottom:0; }
+  .tag-label{ font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--text-soft); margin-bottom:8px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-size:.85rem; padding:6px 12px; border-radius:8px;
+    background:#eff4ff; color:var(--navy); border:1px solid #dbe6fb;
+  }
+
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media (max-width:760px){ .steps{ grid-template-columns:1fr; } }
+  .step{ display:flex; gap:14px; }
+  .step-num{
+    flex:none; width:34px; height:34px; border-radius:9px;
+    background:var(--navy); color:#fff; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step-title{ font-weight:600; color:var(--text-dark); margin-bottom:4px; }
+  .step-desc{ font-size:.92rem; color:var(--text-soft); }
+
+  .feature-list{ list-style:none; }
+  .feature-item{ position:relative; padding-left:28px; margin-bottom:14px; }
+  .feature-item:last-child{ margin-bottom:0; }
+  .feature-item::before{ content:"✓"; position:absolute; left:0; top:0; color:var(--blue); font-weight:bold; }
+  .feature-title{ font-weight:600; color:var(--text-dark); }
+
+  .disclaimer{
+    background:#f1f5f9; border-left:4px solid var(--blue);
+    padding:20px; border-radius:0 8px 8px 0; margin-top:16px;
+  }
+  .disclaimer h3{ font-size:1rem; color:var(--text-dark); margin-bottom:6px; }
+  .disclaimer p{ font-size:.92rem; }
+
+  footer{
+    background:var(--navy-dark); color:#fff;
+    padding:26px 20px; margin-top:8px;
+  }
+  .footer-inner{
+    max-width:1000px; margin:0 auto;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+  }
+  footer a{ color:#93c5fd; text-decoration:none; font-weight:600; }
+  footer .footer-phone{ font-size:1.15rem; font-weight:700; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-container">
+    <span class="badge">Инженер ПТО · Самозанятая</span>
+    <h1>Разработка ППР и технологических карт</h1>
+    <p class="lead">Профессиональная разработка организационно-технологической документации для строительных компаний и подрядных организаций.</p>
+
+    <div class="stats">
+      <div class="stat"><b>8 лет опыта</b><span>в ПТО на крупных объектах</span></div>
+      <div class="stat"><b>100% официально</b><span>договор, чеки физ. и юр. лицам</span></div>
+      <div class="stat"><b>от 4 000 ₽</b><span>быстрый расчёт и сдача</span></div>
+    </div>
+
+    <div class="cta-buttons">
+      <a href="tel:+79505088827" class="btn btn-phone">📞 +7 950 508-88-27</a>
+      <a href="https://t.me/PartnovS7" target="_blank" rel="noopener noreferrer" class="btn btn-telegram">✈️ Написать в Telegram</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="grid-2">
+    <div class="card">
+      <h2>Услуги и стоимость</h2>
+      <table class="prices">
+        <tr>
+          <td>
+            <div class="svc-name">Технологическая карта (ТК)</div>
+            <div class="svc-desc">На отдельные виды строительно-монтажных работ</div>
+          </td>
+          <td class="svc-price">от 4 000 ₽</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">Проект производства работ (ППР)</div>
+            <div class="svc-desc">Комплексный проект с учётом требований заказчика</div>
+          </td>
+          <td class="svc-price">от 8 000 ₽</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">Паспорта на оборудование</div>
+            <div class="svc-desc">Разработка и восстановление технической документации</div>
+          </td>
+          <td class="svc-price">по договору</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="svc-name">Исполнительная документация</div>
+            <div class="svc-desc">Восстановление и оформление задним числом</div>
+          </td>
+          <td class="svc-price">по договору</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Практический опыт</h2>
+      <div class="tag-group">
+        <div class="tag-label">Объекты применения</div>
+        <div class="tags">
+          <span class="tag">ПАО «НК «Роснефть»</span>
+          <span class="tag">СИБУР (Нижневартовский ГПЗ)</span>
+          <span class="tag">СИБУР (Белозёрный ГПЗ)</span>
+          <span class="tag">АО «Томскнефть» ВНК</span>
+        </div>
+      </div>
+      <div class="tag-group">
+        <div class="tag-label">Профиль работ</div>
+        <div class="tags">
+          <span class="tag">Трубопроводы</span>
+          <span class="tag">Сварочные работы</span>
+          <span class="tag">Свайные работы</span>
+          <span class="tag">АКЗ (антикоррозия)</span>
+          <span class="tag">Монтаж металлоконструкций</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:24px;">
+    <h2>Схема работы (3 шага)</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Уточнение деталей заказа</div>
+          <div class="step-desc">Обсуждаем задачи, состав работ, требования технадзора и сроки.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Передача исходных данных</div>
+          <div class="step-desc">Заказчик предоставляет чертежи (ПОС, РД), ТЗ и спецификации.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Разработка и сдача</div>
+          <div class="step-desc">Готовлю документацию, вношу правки при замечаниях до согласования.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h2>Почему стоит обратиться</h2>
+      <ul class="feature-list">
+        <li class="feature-item"><span class="feature-title">Реальный опыт на промобъектах</span> — знание действующих СНиП, ГОСТ, СП и регламентов нефтегазовой отрасли, а не абстрактная теория.</li>
+        <li class="feature-item"><span class="feature-title">Официальный статус</span> — работаю как самозанятая, заключение договора.</li>
+        <li class="feature-item"><span class="feature-title">Выдача чеков</span> — официальные чеки для юр. лиц (учёт в расходах) и физ. лиц.</li>
+        <li class="feature-item"><span class="feature-title">Оперативность</span> — прямое общение с исполнителем без посредников и менеджеров.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Сопровождение и правки</h2>
+      <div class="disclaimer">
+        <h3>Честные условия</h3>
+        <p>Готова вносить правки по замечаниям технадзора или службы строительного контроля заказчика (условия обсуждаются отдельно). Ответственность за прохождение документом внутренней экспертизы заказчика лежит на самом заказчике.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span>Готовы обсудить ваш объект?</span>
+    <span class="footer-phone"><a href="tel:+79505088827">+7 950 508-88-27</a> · <a href="https://t.me/PartnovS7" target="_blank" rel="noopener noreferrer">@PartnovS7</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

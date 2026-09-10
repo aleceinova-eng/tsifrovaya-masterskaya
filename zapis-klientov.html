@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Парикмахер: Старт</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --primary: #6c5ce7;
+      --bg: #f5f6fa;
+      --surface: #ffffff;
+      --text: #2d3436;
+      --danger: #ff7675;
+      --success: #00cec9;
+      --soft: #b2bec3;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 8px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 0 8px; }
+    h1 { margin: 0; font-size: 20px; line-height: 1.2; }
+    .status-badge { padding: 6px 12px; border-radius: 12px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .status-online { background: var(--success); color: white; }
+    .status-offline { background: var(--danger); color: white; }
+
+    .grid { display: grid; grid-template-columns: 260px 1fr; gap: 14px; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+    /* Календарь */
+    .calendar { background: var(--surface); padding: 12px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .day-header { font-weight: 700; color: #636e72; margin-bottom: 10px; display: flex; justify-content: space-between; }
+    .slot { padding: 10px 8px; border: 1px solid #dfe6e9; border-radius: 8px; cursor: pointer; margin-bottom: 6px; transition: 0.15s; font-size: 15px; text-align: center; }
+    .slot:active { background: #f1f2f6; transform: scale(0.98); }
+    .slot.booked { background: #ffeaa7; border-color: #fab1a0; color: #d63031; }
+    .slot.selected { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* Карточка клиента */
+    .client-card { background: var(--surface); padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: none; }
+    .client-card.active { display: block; animation: fadeIn 0.3s ease; }
+    .client-info h3 { margin: 0 0 6px 0; }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .tag { background: #dfe6e9; padding: 4px 8px; border-radius: 6px; font-size: 13px; color: #636e72; }
+    .history-list { list-style: none; padding: 0; margin: 12px 0; }
+    .history-item { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid #f1f2f6; }
+    .history-date { color: var(--soft); font-size: 13px; }
+
+    /* Форма записи */
+    .booking-form { background: var(--surface); padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: none; margin-top: 14px; }
+    .booking-form.active { display: block; animation: fadeIn 0.3s ease; }
+    .form-group { margin-bottom: 12px; }
+    .form-label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+    input, select { width: 100%; padding: 14px 12px; border: 1px solid #dfe6e9; border-radius: 10px; box-sizing: border-box; font-size: 15px; outline: none; }
+    button.primary { background: var(--primary); color: white; border: none; padding: 16px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 16px; width: 100%; }
+    button.primary:active { opacity: 0.9; transform: scale(0.99); }
+    .cost-preview { margin-top: 14px; padding: 12px; background: #f1f2f6; border-radius: 10px; }
+    .cost-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px; }
+    .cost-row.total { font-weight: 700; font-size: 16px; margin-top: 8px; }
+
+    /* Офлайн-экран */
+    .offline-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.95); z-index: 1000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+    .offline-icon { font-size: 48px; margin-bottom: 12px; }
+    .offline-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .offline-desc { color: #636e72; font-size: 14px; margin-bottom: 20px; }
+    button.sync-btn { background: white; color: var(--text); border: 1px solid var(--soft); padding: 12px 24px; border-radius: 10px; font-weight: 600; }
+
+    /* Уведомления */
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: white; padding: 14px 22px; border-radius: 12px; z-index: 999; transition: transform 0.3s ease; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Парикмахер: Старт</h1>
+      <div id="connection-status" class="status-badge status-online">Онлайн</div>
+    </header>
+
+    <div class="grid">
+      <!-- Календарь -->
+      <div class="calendar">
+        <div class="day-header">
+          <span>Сегодня, 15 октября</span>
+          <span id="today-stats">Клиентов: 3</span>
+        </div>
+        <div id="slots-container">
+          <!-- JS заполнит слоты -->
+        </div>
+      </div>
+
+      <!-- Карточка клиента -->
+      <div class="client-card" id="client-card">
+        <div class="client-info">
+          <h3 id="client-name">Иван Петров</h3>
+          <p id="client-phone">+7 (999) 000-00-00</p>
+          <div class="tags">
+            <span class="tag">любит тёплый оттенок</span>
+            <span class="tag">аллергия на аммиак</span>
+            <span class="tag">постоянный клиент</span>
+          </div>
+          <hr style="margin: 12px 0; border: 0; border-top: 1px solid #f1f2f6;">
+          <h4 style="font-size:16px; margin:0 0 10px 0;">История визитов</h4>
+          <ul class="history-list" id="history-list">
+            <!-- JS заполнит историю -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- Форма записи -->
+      <div class="booking-form" id="booking-form">
+        <h3 style="margin:0 0 16px 0; font-size:18px;">Новая запись</h3>
+        <div class="form-group">
+          <label class="form-label">Услуга</label>
+          <select id="service-select">
+            <option value="Стрижка">Стрижка — 1 500 ₽</option>
+            <option value="Окрашивание">Окрашивание — 3 500 ₽</option>
+            <option value="Укладка">Укладка — 1 200 ₽</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Время</label>
+          <input type="text" id="selected-time" readonly placeholder="Выберите время в календаре" />
+        </div>
+        <div class="cost-preview">
+          <div class="cost-row"><span>Цена услуги:</span><span id="price-display">0 ₽</span></div>
+          <div class="cost-row"><span>Себестоимость (материалы):</span><span id="cost-display">0 ₽</span></div>
+          <div class="cost-row total"><span>Чистая прибыль:</span><span id="profit-display">0 ₽</span></div>
+        </div>
+        <button class="primary" onclick="sendBooking()">Отправить запись и подтверждение</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Офлайн-экран -->
+  <div class="offline-overlay" id="offline-overlay">
+    <div class="offline-icon">📵</div>
+    <div class="offline-title">Нет соединения</div>
+    <div class="offline-desc">Новые записи недоступны. Данные синхронизируются при появлении сети.</div>
+    <button class="sync-btn" onclick="simulateSync()">Синхронизировать</button>
+  </div>
+
+  <div id="toast" class="toast">Сообщение отправлено в WhatsApp!</div>
+
+  <script>
+    // Имитация данных
+    const bookedSlots = ['10:00', '12:00'];
+    const clientHistory = [
+      { service: 'Стрижка', date: '10.10', cost: 1500 },
+      { service: 'Окрашивание', date: '01.10', cost: 3500 }
+    ];
+    const prices = {
+      'Стрижка': 1500,
+      'Окрашивание': 3500,
+      'Укладка': 1200
+    };
+    const materialsCost = {
+      'Стрижка': 200,
+      'Окрашивание': 1800
+    };
+
+    const times = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'];
+    const slotsContainer = document.getElementById('slots-container');
+    const selectedTimeInput = document.getElementById('selected-time');
+    const bookingForm = document.getElementById('booking-form');
+    const clientCard = document.getElementById('client-card');
+    const toast = document.getElementById('toast');
+    const offlineOverlay = document.getElementById('offline-overlay');
+
+    // Рендер календаря
+    times.forEach(time => {
+      const isBooked = bookedSlots.includes(time);
+      const slot = document.createElement('div');
+      slot.className = `slot ${isBooked ? 'booked' : ''}`;
+      slot.textContent = time;
+      if (!isBooked) {
+        slot.onclick = (e) => selectTime(time, e);
+      }
+      slotsContainer.appendChild(slot);
+    });
+
+    function selectTime(time, e) {
+      document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+      e.target.classList.add('selected');
+      selectedTimeInput.value = time;
+      openBookingForm();
+    }
+
+    function openBookingForm() {
+      clientCard.classList.remove('active');
+      bookingForm.classList.add('active');
+      updateCosts();
+    }
+
+    function updateCosts() {
+      const service = document.getElementById('service-select').value;
+      const price = prices[service];
+      const cost = materialsCost[service] || 0;
+      const profit = price - cost;
+
+      document.getElementById('price-display').textContent = price + ' ₽';
+      document.getElementById('cost-display').textContent = cost + ' ₽';
+      document.getElementById('profit-display').textContent = profit + ' ₽';
+    }
+
+    document.getElementById('service-select').addEventListener('change', updateCosts);
+
+    function sendBooking() {
+      if (!selectedTimeInput.value) {
+        alert('Сначала выберите время!');
+        return;
+      }
+      showToast();
+      setTimeout(() => {
+        bookingForm.classList.remove('active');
+        clientCard.classList.add('active');
+      }, 1000);
+    }
+
+    function showToast() {
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Показать карточку клиента при загрузке
+    clientCard.classList.add('active');
+    document.getElementById('history-list').innerHTML = clientHistory.map(h =>
+      `<li class="history-item"><span>${h.service}<br><span class="history-date">${h.date}</span></span><span>${h.cost} ₽</span></li>`
+    ).join('');
+
+    // Симуляция офлайн-режима (для наглядности)
+    setTimeout(() => {
+      const status = document.getElementById('connection-status');
+      status.className = 'status-badge status-offline';
+      status.textContent = 'Офлайн';
+      offlineOverlay.style.display = 'flex';
+    }, 9000);
+
+    function simulateSync() {
+      offlineOverlay.style.display = 'none';
+      const status = document.getElementById('connection-status');
+      status.className = 'status-badge status-online';
+      status.textContent = 'Онлайн';
+    }
+  </script>
+</body>
+</html>

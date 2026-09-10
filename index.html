@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цифровая мастерская — сайты и презентации для вашего бизнеса</title>
+<style>
+  :root {
+    --bg: #F7F2E8;
+    --bg-card: #FFFFFF;
+    --accent: #b5824a;
+    --accent-light: #d2a878;
+    --text: #2b241c;
+    --text-soft: #6f6355;
+    --border: #e6dcc8;
+    --on-accent: #ffffff;
+    --accent-pop: #96652f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html {
+    scroll-behavior: smooth;
+  }
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  body {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 72px 0; scroll-margin-top: 62px; }
+
+  .reveal { transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.reveal-pending { opacity: 0; transform: translateY(24px); }
+  .reveal.reveal-visible { opacity: 1; transform: translateY(0); }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--on-accent);
+    text-decoration: none;
+    padding: 15px 32px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 14px rgba(201,161,91,0.25);
+  }
+  .cta-btn:hover { background: var(--accent-pop); transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 24px rgba(232,165,63,0.45); }
+  .cta-btn:active { transform: translateY(0) scale(1); }
+
+  /* Навигация */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(247,242,232,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 920px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; font-family: Georgia, serif; color: var(--accent); font-size: 19px; font-weight: 700; text-decoration: none; }
+  .logo-badge { flex-shrink: 0; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: var(--text); text-decoration: none; font-size: 15px; transition: color 0.2s ease; }
+  .nav-links a:hover { color: var(--accent); }
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 6px;
+  }
+  .hamburger span { width: 24px; height: 2px; background: var(--accent); transition: transform 0.25s ease, opacity 0.25s ease; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 680px) {
+    .nav-links {
+      position: fixed; top: 53px; left: 0; right: 0;
+      background: var(--bg); flex-direction: column; gap: 0;
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { max-height: 300px; }
+    .nav-links a { padding: 16px 24px; display: block; border-top: 1px solid var(--border); }
+    .hamburger { display: flex; }
+  }
+
+  /* Обложка */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, #F7F2E8, #FBF7EF, #F3E9D6, #FBF7EF, #F7F2E8);
+    background-size: 400% 400%;
+    animation: heroGradient 18s ease infinite;
+  }
+  @keyframes heroGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .hero-parallax {
+    position: absolute; inset: -10%;
+    background: radial-gradient(circle at 30% 30%, rgba(201,161,91,0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .hero > .container { position: relative; z-index: 1; }
+  .hero h1 {
+    font-size: clamp(30px, 5vw, 46px);
+    color: var(--text);
+    margin-bottom: 20px;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero p {
+    font-size: 19px;
+    color: var(--text-soft);
+    max-width: 560px;
+    margin: 0 auto 34px;
+  }
+
+  /* О вас */
+  .about { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .about h2 { color: var(--text); font-size: 28px; margin-bottom: 20px; }
+  .about p { font-size: 18px; color: var(--text); max-width: 680px; }
+  .about-stat {
+    display: inline-flex; align-items: baseline; gap: 10px;
+    margin-top: 22px; padding: 14px 22px;
+    background: var(--bg); border-radius: 10px; border-left: 3px solid var(--accent);
+  }
+  .about-stat .num { font-family: Georgia, serif; font-size: 34px; color: var(--accent); }
+  .about-stat .label { font-size: 14px; color: var(--text-soft); }
+
+  /* Портфолио */
+  .portfolio h2 { color: var(--text); font-size: 28px; margin-bottom: 8px; text-align: center; }
+  .portfolio > .container > p.caption { text-align: center; color: var(--text-soft); margin-bottom: 40px; font-size: 15px; }
+  .portfolio > .container { max-width: 1180px; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  @media (max-width: 900px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(201,161,91,0.12); }
+  .card h3 { font-size: 19px; color: var(--text); margin-bottom: 10px; }
+  .card p { font-size: 15px; color: var(--text-soft); margin-bottom: 16px; }
+  .card a { color: var(--accent); font-weight: 600; text-decoration: none; font-size: 15px; }
+  .card a:hover { text-decoration: underline; }
+  .portfolio-note { text-align: center; color: var(--text-soft); font-size: 14px; margin-top: 28px; }
+
+  /* Как я работаю */
+  .steps { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .steps h2 { color: var(--text); font-size: 28px; margin-bottom: 36px; text-align: center; }
+  .step-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; counter-reset: step; }
+  .step-item { text-align: center; }
+  .step-num {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--accent); color: var(--on-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif; font-size: 19px;
+    margin: 0 auto 14px;
+  }
+  .step-item p { font-size: 15px; color: var(--text); }
+
+  /* Стоимость */
+  .pricing h2 { color: var(--text); font-size: 28px; margin-bottom: 20px; text-align: center; }
+  .price-box {
+    background: var(--bg-card);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 32px;
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .price-box .price { font-family: Georgia, serif; font-size: 32px; color: var(--accent); margin-bottom: 8px; }
+  .price-box .note { font-size: 14px; color: var(--text-soft); margin-top: 12px; }
+
+  /* Почему я */
+  .why { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .why h2 { color: var(--text); font-size: 28px; margin-bottom: 32px; text-align: center; }
+  .why-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .why-item {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    font-size: 15px;
+    border-left: 3px solid var(--accent);
+  }
+
+  /* Контакты */
+  .contact { text-align: center; }
+  .contact h2 { color: var(--text); font-size: 28px; margin-bottom: 16px; }
+  .contact p { color: var(--text-soft); margin-bottom: 28px; }
+  .contact-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-secondary {
+    display: inline-block;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    padding: 13px 30px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .btn-secondary:hover { background: var(--accent-pop); border-color: var(--accent-pop); color: var(--on-accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(232,165,63,0.35); }
+
+  footer {
+    text-align: center;
+    padding: 40px 24px 32px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-logo {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .footer-logo span { font-family: Georgia, serif; font-size: 16px; color: var(--text); font-weight: 700; }
+  footer .tagline { font-size: 13px; color: var(--text-soft); margin-bottom: 6px; }
+  footer .copyright { font-size: 12px; color: var(--text-soft); opacity: 0.7; }
+
+  /* Кнопка "наверх" */
+  #toTop {
+    position: fixed; bottom: 24px; right: 24px;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--accent); color: var(--on-accent); border: none;
+    font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  }
+  #toTop.show { opacity: 1; pointer-events: auto; }
+  #toTop:hover { background: var(--accent-pop); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(232,165,63,0.4); }
+
+  @media (max-width: 600px) {
+    section { padding: 52px 0; }
+    .hero { min-height: 80vh; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="top">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo">
+      <svg class="logo-badge" width="52" height="52" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="28" cy="28" r="27" fill="#c9a15b"/>
+        <circle cx="28" cy="28" r="22" fill="none" stroke="#12181f" stroke-width="1"/>
+        <path d="M 15 15 Q 28 7 41 15" fill="none" stroke="#12181f" stroke-width="1"/>
+        <path d="M 15 41 Q 28 49 41 41" fill="none" stroke="#12181f" stroke-width="1"/>
+        <text x="28" y="36" font-family="Georgia, serif" font-style="italic" font-size="21" font-weight="700" fill="#12181f" text-anchor="middle">ЦМ</text>
+      </svg>
+      Цифровая мастерская
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">Обо мне</a></li>
+      <li><a href="#portfolio">Портфолио</a></li>
+      <li><a href="#steps">Как работаю</a></li>
+      <li><a href="#pricing">Цена</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-parallax" id="heroParallax"></div>
+  <div class="container">
+    <h1>Сайты и презентации для вашего бизнеса — без дизайн-студии и без ожидания месяцами</h1>
+    <p>Делаю рабочий сайт, лендинг или презентацию с помощью ИИ — быстро и понятным языком, без технического жаргона</p>
+    <a href="#contact" class="cta-btn">Написать в Telegram</a>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container reveal">
+    <h2>Обо мне</h2>
+    <p>8 лет проработала инженером на крупных стройках (Роснефть, СИБУР) — привыкла делать документы и проекты, которые проходят строгую проверку. Сейчас применяю тот же подход к созданию сайтов: разбираюсь до конца, объясняю просто, ничего не делаю «на глазок».</p>
+    <div class="about-stat">
+      <span class="num" data-count="8">8</span>
+      <span class="label">лет технического<br>опыта</span>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+  <div class="container reveal">
+    <h2>Портфолио / примеры</h2>
+    <p class="caption">Часть примеров — учебные проекты, сделаны для практики. Указано честно.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>Цветочная мастерская «Ирис»</h3>
+        <p><strong>Задача:</strong> показать, как выглядит рабочий интернет-магазин с нуля — каталог, живые фото, вовлечение</p>
+        <p><strong>Результат:</strong> каталог букетов + интерактивное колесо скидок, светлая витрина по образцу топовых цветочных магазинов — чтобы фото цветов не терялись</p>
+        <a href="iris.html" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>Разработка ППР и технологических карт</h3>
+        <p><strong>Задача:</strong> упаковать 8 лет инженерного опыта в понятный сайт-визитку для заказчиков строительных работ</p>
+        <p><strong>Результат:</strong> лендинг, который сразу объясняет специализацию и вызывает доверие с первого экрана</p>
+        <a href="ppr-tk.html" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>Разбор карточки Wildberries</h3>
+        <p><strong>Задача:</strong> продавцу нужно было понять, почему карточка товара не продаёт</p>
+        <p><strong>Результат:</strong> наглядный разбор «было / стало» с конкретными правками — этим же форматом показываю ценность работы новым клиентам</p>
+        <a href="wb-card.html" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>Умный репетитор</h3>
+        <p><strong>Задача:</strong> нужен был бесплатный тренажёр для подготовки к ЕГЭ по истории</p>
+        <p><strong>Результат:</strong> рабочее веб-приложение с тестами, открывается с телефона без установки</p>
+        <a href="https://taupe-nougat-be9bf6.netlify.app/" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>Помощник по оформлению документов</h3>
+        <p><strong>Задача:</strong> избавить малый бизнес от поиска юридических шаблонов в интернете</p>
+        <p><strong>Результат:</strong> сервис сам собирает готовый договор, счёт или претензию по ответам на простые вопросы</p>
+        <a href="http://cc41241.tw1.ru" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>Ваш бизнес в интернете</h3>
+        <p><strong>Задача:</strong> показать, как небольшая компания может стать заметной на картах и в объявлениях</p>
+        <p><strong>Результат:</strong> лендинг-визитка услуги «под ключ»: сайт + карточки Яндекс.Карт, 2ГИС и Авито</p>
+        <a href="http://cc41241.tw1.ru/biznes.html" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>AI-помощник для приёма заявок</h3>
+        <p><strong>Задача:</strong> разгрузить оператора компании, отвечающего клиентам на однотипные вопросы</p>
+        <p><strong>Результат:</strong> рабочий чат-бот, который сам отвечает на вопросы о ценах и сроках и собирает заявку</p>
+        <a href="http://cc41241.tw1.ru/ai-prodavets.html" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>Запись клиентов для мастера</h3>
+        <p><strong>Задача:</strong> помочь мастеру красоты не терять записи и помнить особенности каждого клиента</p>
+        <p><strong>Результат:</strong> мини-приложение с расписанием на день и карточкой клиента (история визитов, предпочтения)</p>
+        <a href="zapis-klientov.html" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>Салон красоты Lumière Beauty</h3>
+        <p><strong>Задача:</strong> показать, как может выглядеть сайт салона красоты — от первого экрана до портфолио мастеров</p>
+        <p><strong>Результат:</strong> светлый, тёплый сайт-визитка с услугами, портфолио работ и записью</p>
+        <a href="https://lumiere-digital-studio.lovable.app" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>AI-помощник для стоматологии</h3>
+        <p><strong>Задача:</strong> клиника тратит деньги на оператора call-центра для рутинных звонков и записи</p>
+        <p><strong>Результат:</strong> чат-бот сам записывает на приём и отвечает по прайсу, а срочные и сложные случаи сразу передаёт администратору</p>
+        <a href="ai-stomatologiya.html" target="_blank">Открыть проект →</a>
+      </div>
+      <div class="card">
+        <h3>AI-помощник для салона красоты</h3>
+        <p><strong>Задача:</strong> администратору салона приходится вручную отвечать на одни и те же вопросы о ценах и записи</p>
+        <p><strong>Результат:</strong> помощник сам записывает клиентов и консультирует, а жалобы и нестандартные процедуры передаёт администратору</p>
+        <a href="ai-salon-krasoty.html" target="_blank">Открыть проект →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps" id="steps">
+  <div class="container reveal">
+    <h2>Как я работаю</h2>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><p>Пишете свои хотелки — я оформлю их в техническое задание</p></div>
+      <div class="step-item"><div class="step-num">2</div><p>Обсуждаем задачу и сроки</p></div>
+      <div class="step-item"><div class="step-num">3</div><p>Собираю сайт, присылаю на проверку</p></div>
+      <div class="step-item"><div class="step-num">4</div><p>Правки — и сайт готов к работе</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="container reveal">
+    <h2>Стоимость</h2>
+    <div class="price-box">
+      <div class="price">от 8 000 ₽</div>
+      <p>Сайт-визитка. Точная цена зависит от задачи, обсудим в переписке, без скрытых доплат.</p>
+      <p class="note">Ориентир по рынку 2026: фрилансеры берут 5 000–40 000 ₽ за одностраничник — начинаем с нижней границы, пока набираем портфолио и отзывы.</p>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="container reveal">
+    <h2>Почему я</h2>
+    <div class="why-list">
+      <div class="why-item">Объясняю простыми словами — если что-то непонятно, разберём вместе, а не отправлю читать документацию</div>
+      <div class="why-item">Реальный технический опыт — не только курсы, но и 8 лет проверенной инженерной работы</div>
+      <div class="why-item">Отвечаю в течение дня</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container reveal">
+    <h2>Контакты</h2>
+    <p>Расскажите, какая у вас задача — отвечу в течение дня</p>
+    <div class="contact-btns">
+      <a href="https://t.me/PartnovS" class="cta-btn" target="_blank">Написать в Telegram</a>
+      <a href="https://max.ru/u/f9LHodD0cOJIfCF3_1gyi-zCMaKWBz30MJ4co_bRHtlSNEfmd2oO8fljGqw" class="btn-secondary" target="_blank">Написать в MAX</a>
+      <a href="https://t.me/tsifrovaya_masterskaya" class="btn-secondary" target="_blank">Подписаться на канал</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <svg width="28" height="28" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="28" cy="28" r="27" fill="#c9a15b"/>
+      <text x="28" y="36" font-family="Georgia, serif" font-style="italic" font-size="21" font-weight="700" fill="#12181f" text-anchor="middle">ЦМ</text>
+    </svg>
+    <span>Цифровая мастерская</span>
+  </div>
+  <p class="tagline">Сайты и презентации для малого бизнеса — с помощью ИИ, с вниманием к деталям</p>
+  <p class="copyright">© 2026</p>
+</footer>
+
+<button id="toTop" aria-label="Наверх">↑</button>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  revealEls.forEach(el => el.classList.add('reveal-pending'));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.remove('reveal-pending');
+        e.target.classList.add('reveal-visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+
+  const toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTop.classList.toggle('show', window.scrollY > 500);
+  });
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Гамбургер-меню
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // Прокрутка к разделам теперь работает через чистый CSS (scroll-behavior: smooth) —
+  // ссылки — обычные якоря <a href="#id">, без JS. Здесь только закрываем мобильное меню после клика.
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      if (navLinks) navLinks.classList.remove('open');
+      if (hamburger) hamburger.classList.remove('open');
+    });
+  });
+
+  // Параллакс на обложке
+  const heroParallax = document.getElementById('heroParallax');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y < window.innerHeight) {
+      heroParallax.style.transform = 'translateY(' + (y * 0.3) + 'px)';
+    }
+  });
+
+  // Счётчик "лет опыта"
+  const counterEl = document.querySelector('.about-stat .num');
+  let counted = false;
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !counted) {
+        counted = true;
+        const target = parseInt(counterEl.dataset.count, 10);
+        let current = 0;
+        counterEl.textContent = '0';
+        const step = () => {
+          current++;
+          counterEl.textContent = current;
+          if (current < target) requestAnimationFrame(() => setTimeout(step, 120));
+        };
+        step();
+      }
+    });
+  }, { threshold: 0.5 });
+  counterObserver.observe(counterEl);
+</script>
+
+</body>
+</html>

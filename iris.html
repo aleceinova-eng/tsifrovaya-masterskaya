@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цветочная мастерская «Ирис» — свежие букеты с доставкой</title>
+<style>
+  :root {
+    --bg: #fdf3f0;
+    --bg-card: #ffffff;
+    --accent: #b5527a;
+    --accent-light: #d17a9c;
+    --green: #5c7a56;
+    --text: #3a332f;
+    --text-soft: #7a726a;
+    --border: #f0dfe3;
+    --on-accent: #ffffff;
+    --surface-text: #3a332f;
+    --surface-text-soft: #7a726a;
+    --star: #e0a52c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 64px 0; }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--on-accent);
+    text-decoration: none;
+    padding: 15px 32px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px rgba(181,82,122,0.25);
+  }
+  .cta-btn:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(181,82,122,0.32); }
+
+  /* Обложка */
+  .hero {
+    min-height: 78vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(rgba(20,10,15,0.55), rgba(20,10,15,0.75)), url('hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-flowers {
+    font-size: 40px;
+    margin-bottom: 18px;
+    letter-spacing: 12px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    color: #fff;
+    margin-bottom: 18px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.45);
+  }
+  .hero p {
+    font-size: 18px;
+    color: #f0e4e8;
+    max-width: 520px;
+    margin: 0 auto 30px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+
+  /* Каталог */
+  .catalog h2 { color: var(--accent); font-size: 28px; margin-bottom: 8px; text-align: center; }
+  .catalog > .container > p.caption { text-align: center; color: var(--text-soft); margin-bottom: 40px; font-size: 15px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 12px 28px rgba(181,82,122,0.12); }
+  .card-img {
+    height: 190px;
+    overflow: hidden;
+  }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-body { padding: 20px 22px 24px; }
+  .card h3 { font-size: 18px; color: var(--surface-text); margin-bottom: 6px; }
+  .card p { font-size: 14px; color: var(--surface-text-soft); margin-bottom: 14px; }
+  .card .price { font-family: Georgia, serif; font-size: 20px; color: var(--accent); font-weight: 700; }
+
+  /* Отзывы */
+  .reviews h2 { color: var(--accent); font-size: 28px; margin-bottom: 8px; text-align: center; }
+  .reviews > .container > p.caption { text-align: center; color: var(--text-soft); margin-bottom: 40px; font-size: 15px; }
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+  .review-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+  }
+  .review-stars { color: var(--star); font-size: 15px; margin-bottom: 10px; letter-spacing: 2px; }
+  .review-card p.text { font-size: 14px; color: var(--surface-text); margin-bottom: 14px; }
+  .review-author { display: flex; align-items: center; gap: 10px; }
+  .review-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; font-family: Georgia, serif;
+    flex-shrink: 0;
+  }
+  .review-author .name { font-size: 13px; font-weight: 600; color: var(--surface-text); }
+  .review-author .meta { font-size: 12px; color: var(--surface-text-soft); }
+
+  /* Колесо подарков */
+  .wheel-section { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; }
+  .wheel-section h2 { color: var(--accent); font-size: 28px; margin-bottom: 10px; }
+  .wheel-section p.sub { color: var(--surface-text-soft); margin-bottom: 40px; }
+  .wheel-wrap { position: relative; width: 280px; height: 280px; margin: 0 auto 30px; }
+  .wheel {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: conic-gradient(
+      var(--accent) 0deg 60deg,
+      var(--green) 60deg 120deg,
+      var(--accent-light) 120deg 180deg,
+      var(--accent) 180deg 240deg,
+      var(--green) 240deg 300deg,
+      var(--accent-light) 300deg 360deg
+    );
+    border: 6px solid var(--bg);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    position: relative;
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  }
+  .wheel span.seg {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    width: 78px;
+    line-height: 1.2;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    pointer-events: none;
+  }
+  .wheel-pointer {
+    position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 22px solid var(--accent);
+    z-index: 2;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+  }
+  #wheelResult { font-size: 18px; color: var(--accent); font-weight: 700; min-height: 28px; margin-top: 10px; }
+
+  /* Контакты */
+  .contact { text-align: center; }
+  .contact h2 { color: var(--accent); font-size: 28px; margin-bottom: 16px; }
+  .contact p { color: var(--text-soft); margin-bottom: 24px; }
+
+  footer { text-align: center; padding: 28px; font-size: 13px; color: var(--text-soft); }
+
+  .demo-note {
+    background: #fdeef2; border: 1px solid #f3d6e0; border-radius: 10px;
+    padding: 12px 18px; font-size: 13px; color: var(--surface-text-soft); text-align: center;
+    max-width: 640px; margin: 0 auto 0;
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 48px 0; }
+    .hero { min-height: 70vh; }
+    .wheel-wrap { width: 230px; height: 230px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="container">
+    <h1>Свежие букеты с доставкой в день заказа</h1>
+    <p>Цветочная мастерская «Ирис» — собираем букеты вручную, без искусственных наполнителей и лишнего пафоса</p>
+    <a href="#catalog" class="cta-btn">Смотреть каталог</a>
+  </div>
+</section>
+
+<section class="catalog" id="catalog">
+  <div class="container">
+    <h2>Каталог букетов</h2>
+    <p class="caption">Демо-пример каталога — реальные фото и цены подставляются под конкретного заказчика</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-img"><img src="rose.jpg" alt="Букет розовых роз с гипсофилой"></div>
+        <div class="card-body">
+          <h3>«Утренний сад»</h3>
+          <p>Пионовидные розы, эустома, зелень</p>
+          <div class="price">от 2 900 ₽</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img"><img src="sunflower.jpg" alt="Букет подсолнухов"></div>
+        <div class="card-body">
+          <h3>«Солнечный день»</h3>
+          <p>Подсолнухи, хризантемы, полевые травы</p>
+          <div class="price">от 2 200 ₽</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img"><img src="tulip.jpg" alt="Букет тюльпанов в розовой упаковке"></div>
+        <div class="card-body">
+          <h3>«Нежность»</h3>
+          <p>Тюльпаны, гиацинты, ранункулюсы</p>
+          <div class="price">от 1 900 ₽</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews">
+  <div class="container">
+    <h2>Отзывы</h2>
+    <p class="caption">Демо-пример — реальные отзывы подставляются под конкретный магазин</p>
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="text">«Заказывала букет на день рождения мамы — привезли даже раньше времени, розы стояли свежими больше недели».</p>
+        <div class="review-author">
+          <div class="review-avatar">НК</div>
+          <div>
+            <div class="name">Наталья К.</div>
+            <div class="meta">Заказ «Утренний сад»</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="text">«Подсолнухи выглядели точно как на фото, упаковка аккуратная. Буду заказывать ещё».</p>
+        <div class="review-author">
+          <div class="review-avatar">ИС</div>
+          <div>
+            <div class="name">Ирина С.</div>
+            <div class="meta">Заказ «Солнечный день»</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="text">«Собрали букет за пару часов до встречи, всё вручную, без лишней "плёнки" — как и обещали».</p>
+        <div class="review-author">
+          <div class="review-avatar">ДМ</div>
+          <div>
+            <div class="name">Дмитрий М.</div>
+            <div class="meta">Заказ «Нежность»</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wheel-section">
+  <div class="container">
+    <h2>Колесо подарков</h2>
+    <p class="sub">Крутите колесо — получите скидку на первый заказ</p>
+    <div class="wheel-wrap">
+      <div class="wheel-pointer"></div>
+      <div class="wheel" id="wheel"></div>
+    </div>
+    <button class="cta-btn" id="spinBtn">Крутить колесо</button>
+    <div id="wheelResult"></div>
+    <p class="demo-note" style="margin-top:24px;">Демо-версия — в реальном проекте колесо можно связать с промокодами и рассылкой</p>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="container">
+    <h2>Заказать букет</h2>
+    <p>Соберём букет под ваш повод и бюджет — напишите нам</p>
+    <a href="#" class="cta-btn">Написать в Telegram</a>
+  </div>
+</section>
+
+<footer>Цветочная мастерская «Ирис» · демо-проект студии «Цифровая мастерская» · 2026</footer>
+
+<script>
+  // Подписи секторов колеса — считаем позицию через синус/косинус,
+  // текст не поворачиваем, поэтому он всегда читается прямо, с любой стороны колеса
+  const labels = ['−10%', 'Открытка в подарок', '−15%', 'Бесплатная доставка', '−5%', 'Ещё раз!'];
+  const wheelEl = document.getElementById('wheel');
+  const wheelSize = wheelEl.getBoundingClientRect().width;
+  const center = wheelSize / 2;
+  const labelRadius = wheelSize * 0.3;
+  labels.forEach((text, i) => {
+    const seg = document.createElement('span');
+    seg.className = 'seg';
+    const angleDeg = i * 60 + 30; // центр сектора, 0° = верх, по часовой стрелке
+    const angleRad = angleDeg * Math.PI / 180;
+    const x = center + labelRadius * Math.sin(angleRad);
+    const y = center - labelRadius * Math.cos(angleRad);
+    seg.style.left = x + 'px';
+    seg.style.top = y + 'px';
+    seg.textContent = text;
+    wheelEl.appendChild(seg);
+  });
+
+  const spinBtn = document.getElementById('spinBtn');
+  const resultEl = document.getElementById('wheelResult');
+  let spinning = false;
+  let currentRotation = 0;
+
+  spinBtn.addEventListener('click', () => {
+    if (spinning) return;
+    spinning = true;
+    resultEl.textContent = '';
+    const sectorIndex = Math.floor(Math.random() * labels.length);
+    const extraSpins = 5 * 360;
+    const targetAngle = 360 - (sectorIndex * 60 + 30);
+    currentRotation += extraSpins + targetAngle - (currentRotation % 360);
+    wheelEl.style.transform = `rotate(${currentRotation}deg)`;
+    setTimeout(() => {
+      resultEl.textContent = '🎉 Ваш приз: ' + labels[sectorIndex];
+      spinning = false;
+    }, 4100);
+  });
+</script>
+
+</body>
+</html>
