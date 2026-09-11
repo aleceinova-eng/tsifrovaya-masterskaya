@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Цифровая мастерская — сайты и презентации для вашего бизнеса</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #F7F2E8;
@@ -15,6 +18,8 @@
     --border: #e6dcc8;
     --on-accent: #ffffff;
     --accent-pop: #96652f;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Karla', -apple-system, "Segoe UI", Arial, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html {
@@ -25,12 +30,12 @@
     overflow-x: hidden;
   }
   body {
-    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-family: var(--font-body);
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
   }
-  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; }
   .container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
   section { padding: 52px 0; scroll-margin-top: 62px; }
 
@@ -64,7 +69,7 @@
     max-width: 920px; margin: 0 auto; padding: 14px 24px;
     display: flex; align-items: center; justify-content: space-between;
   }
-  .nav-logo { display: flex; align-items: center; gap: 12px; font-family: Georgia, serif; color: var(--accent); font-size: 19px; font-weight: 700; text-decoration: none; }
+  .nav-logo { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); color: var(--accent); font-size: 19px; font-weight: 700; text-decoration: none; }
   .logo-badge { flex-shrink: 0; }
   .nav-links { display: flex; gap: 28px; list-style: none; }
   .nav-links a { color: var(--text); text-decoration: none; font-size: 15px; transition: color 0.2s ease; }
@@ -133,13 +138,14 @@
   .about { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .about h2 { color: var(--text); font-size: 28px; margin-bottom: 20px; }
   .about p { font-size: 18px; color: var(--text); max-width: 680px; }
+  .stat-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
   .about-stat {
-    display: inline-flex; align-items: baseline; gap: 10px;
-    margin-top: 22px; padding: 14px 22px;
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 16px 22px;
     background: var(--bg); border-radius: 10px; border-left: 3px solid var(--accent);
   }
-  .about-stat .num { font-family: Georgia, serif; font-size: 34px; color: var(--accent); }
-  .about-stat .label { font-size: 14px; color: var(--text-soft); }
+  .about-stat .num { font-family: var(--font-display); font-weight: 600; font-size: 34px; color: var(--accent); }
+  .about-stat .label { font-size: 14px; color: var(--text-soft); line-height: 1.3; }
 
   /* Портфолио */
   .portfolio h2 { color: var(--text); font-size: 28px; margin-bottom: 8px; text-align: center; }
@@ -184,7 +190,7 @@
     width: 56px; height: 56px; border-radius: 50%;
     background: var(--accent); color: var(--on-accent);
     display: flex; align-items: center; justify-content: center;
-    font-family: Georgia, serif; font-size: 24px;
+    font-family: var(--font-display); font-size: 24px;
   }
   .step-item p { font-size: 16px; color: var(--text); margin: 0; }
 
@@ -199,7 +205,7 @@
     margin: 0 auto;
     text-align: center;
   }
-  .price-box .price { font-family: Georgia, serif; font-size: 20px; color: var(--text-soft); margin-bottom: 18px; }
+  .price-box .price { font-family: var(--font-display); font-size: 20px; color: var(--text-soft); margin-bottom: 18px; }
   .price-box .price b { color: var(--accent); font-size: 26px; }
   .price-box .note { font-size: 14px; color: var(--text-soft); margin-top: 16px; }
 
@@ -243,7 +249,7 @@
     display: flex; align-items: center; justify-content: center; gap: 10px;
     margin-bottom: 10px;
   }
-  .footer-logo span { font-family: Georgia, serif; font-size: 16px; color: var(--text); font-weight: 700; }
+  .footer-logo span { font-family: var(--font-display); font-size: 16px; color: var(--text); font-weight: 700; }
   footer .tagline { font-size: 13px; color: var(--text-soft); margin-bottom: 6px; }
   footer .legal-links { font-size: 12.5px; margin-bottom: 8px; }
   footer .legal-links a { color: var(--text-soft); text-decoration: underline; }
@@ -307,9 +313,19 @@
   <div class="container reveal">
     <h2>Обо мне</h2>
     <p>8 лет проработала инженером на крупных стройках (Роснефть, СИБУР) — привыкла делать документы и проекты, которые проходят строгую проверку. Сейчас применяю тот же подход к созданию сайтов: разбираюсь до конца, объясняю просто, ничего не делаю «на глазок».</p>
-    <div class="about-stat">
-      <span class="num" data-count="8">8</span>
-      <span class="label">лет технического<br>опыта</span>
+    <div class="stat-row">
+      <div class="about-stat">
+        <span class="num" data-count="8">8</span>
+        <span class="label">лет технического<br>опыта</span>
+      </div>
+      <div class="about-stat">
+        <span class="num" data-count="11">11</span>
+        <span class="label">готовых примеров<br>в портфолио</span>
+      </div>
+      <div class="about-stat">
+        <span class="num" data-count="1">1</span>
+        <span class="label">день —<br>обычный ответ</span>
+      </div>
     </div>
   </div>
 </section>
@@ -495,25 +511,26 @@
   });
 
   // Счётчик "лет опыта"
-  const counterEl = document.querySelector('.about-stat .num');
-  let counted = false;
+  const counterEls = document.querySelectorAll('.about-stat .num');
+  const countedSet = new WeakSet();
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting && !counted) {
-        counted = true;
-        const target = parseInt(counterEl.dataset.count, 10);
+      if (e.isIntersecting && !countedSet.has(e.target)) {
+        countedSet.add(e.target);
+        const el = e.target;
+        const target = parseInt(el.dataset.count, 10);
         let current = 0;
-        counterEl.textContent = '0';
+        el.textContent = '0';
         const step = () => {
           current++;
-          counterEl.textContent = current;
+          el.textContent = current;
           if (current < target) requestAnimationFrame(() => setTimeout(step, 120));
         };
         step();
       }
     });
   }, { threshold: 0.5 });
-  counterObserver.observe(counterEl);
+  counterEls.forEach(el => counterObserver.observe(el));
 </script>
 
 </body>
