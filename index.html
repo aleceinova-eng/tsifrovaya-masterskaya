@@ -196,18 +196,25 @@
 
   /* Стоимость */
   .pricing h2 { color: var(--text); font-size: 28px; margin-bottom: 20px; text-align: center; }
-  .price-box {
+  .price-note { text-align: center; color: var(--text-soft); font-size: 15px; max-width: 560px; margin: 0 auto 32px; }
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 920px; margin: 0 auto; }
+  @media (max-width: 800px) { .price-grid { grid-template-columns: 1fr; } }
+  .price-card {
     background: var(--bg-card);
-    border: 2px solid var(--accent);
-    border-radius: 12px;
-    padding: 36px 32px;
-    max-width: 480px;
-    margin: 0 auto;
-    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    display: flex; flex-direction: column;
+    transition: transform 200ms cubic-bezier(0.23,1,0.32,1), box-shadow 200ms ease, border-color 200ms ease;
   }
-  .price-box .price { font-family: var(--font-display); font-size: 20px; color: var(--text-soft); margin-bottom: 18px; }
-  .price-box .price b { color: var(--accent); font-size: 26px; }
-  .price-box .note { font-size: 14px; color: var(--text-soft); margin-top: 16px; }
+  .price-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(181,130,74,0.14); border-color: var(--accent); }
+  .price-card.featured { border-color: var(--accent); border-width: 2px; }
+  .price-card h3 { font-size: 19px; margin-bottom: 6px; }
+  .price-card .for { font-size: 13px; color: var(--accent); margin-bottom: 14px; }
+  .price-card ul { list-style: none; margin: 0 0 22px; flex: 1; }
+  .price-card li { font-size: 14px; color: var(--text-soft); padding-left: 18px; position: relative; margin-bottom: 8px; }
+  .price-card li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  .price-card .cta-btn { text-align: center; font-size: 14.5px; padding: 13px 18px; }
 
   /* Почему я */
   .why { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -333,7 +340,7 @@
 <section class="portfolio" id="portfolio">
   <div class="container reveal">
     <h2>Портфолио / примеры</h2>
-    <p class="caption">Часть примеров — учебные проекты, сделаны для практики. Указано честно.</p>
+    <p class="caption">Часть примеров — демонстрационные проекты, сделаны для практики. Указано честно.</p>
     <div class="cards">
       <div class="card">
         <h3>Цветочная мастерская «Ирис»</h3>
@@ -420,9 +427,41 @@
 <section class="pricing" id="pricing">
   <div class="container reveal">
     <h2>Стоимость</h2>
-    <div class="price-box">
-      <p>Каждый сайт разный — расскажите о задаче, и я назову точную цену без скрытых доплат.</p>
-      <a href="#contact" class="cta-btn">Обсудить проект</a>
+    <p class="price-note">Точная цена зависит от задачи — цифры ниже это ориентир, без скрытых доплат.</p>
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>Старт</h3>
+        <div class="for">Для простого сайта-визитки</div>
+        <ul>
+          <li>Одна страница</li>
+          <li>Услуги, цены, контакты</li>
+          <li>Кнопка связи</li>
+          <li>Адаптация под телефон</li>
+        </ul>
+        <a href="#contact" class="cta-btn">Выбрать «Старт» — от 8 000 ₽</a>
+      </div>
+      <div class="price-card featured">
+        <h3>Сайт + AI-помощник</h3>
+        <div class="for">Если часто пишут одни и те же вопросы</div>
+        <ul>
+          <li>Всё из тарифа «Старт»</li>
+          <li>AI-помощник для заявок</li>
+          <li>Приём заявок 24/7</li>
+          <li>Передача сложных случаев вам</li>
+        </ul>
+        <a href="#contact" class="cta-btn">Выбрать этот вариант — от 15 000 ₽</a>
+      </div>
+      <div class="price-card">
+        <h3>Под ключ</h3>
+        <div class="for">Для полного присутствия в интернете</div>
+        <ul>
+          <li>Сайт + AI-помощник</li>
+          <li>Карточка на Яндекс.Картах</li>
+          <li>Презентация для партнёров</li>
+          <li>Полное сопровождение запуска</li>
+        </ul>
+        <a href="#contact" class="cta-btn">Обсудить проект — от 25 000 ₽</a>
+      </div>
     </div>
   </div>
 </section>
