@@ -222,6 +222,95 @@
   .fixt{ font-weight:600; margin-bottom:2px; }
   .fixd{ color:var(--ink-soft); font-size:14.5px; }
 
+  .slide-demo-caption{
+    color:var(--ink-soft);
+    font-size:14.5px;
+    max-width:56ch;
+    margin:-8px 0 20px;
+  }
+
+  .slide-demo{
+    background:var(--paper-raised);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:22px;
+  }
+  .slide-body{
+    display:grid;
+    grid-template-columns:minmax(0,280px) 1fr;
+    gap:24px;
+  }
+  @media (max-width:680px){
+    .slide-body{ grid-template-columns:1fr; }
+    .slide-demo{ padding:18px; }
+  }
+
+  .slide-photo{
+    position:relative;
+    border-radius:12px;
+    overflow:hidden;
+    aspect-ratio:4/5;
+    background:var(--paper);
+  }
+  .slide-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:50% 12%;
+    display:block;
+  }
+  .slide-dots{
+    position:absolute;
+    left:0; right:0; bottom:14px;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+  }
+  .dot{
+    width:6px; height:6px;
+    border-radius:100px;
+    background:rgba(255,255,255,.55);
+  }
+  .dot--active{
+    width:18px;
+    background:var(--marker);
+  }
+
+  .slide-utp{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .utp-block{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    padding:14px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .utp-block:first-child{ padding-top:0; }
+  .utp-block:last-child{ border-bottom:none; padding-bottom:0; }
+  .utp-icon{
+    flex-shrink:0;
+    width:38px; height:38px;
+    border-radius:50%;
+    background:var(--green-soft);
+    color:var(--green);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .utp-icon svg{ width:19px; height:19px; }
+  .utp-title{
+    font-weight:600;
+    font-size:15px;
+    margin-bottom:3px;
+  }
+  .utp-desc{
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+
   .keywords{
     margin-top:36px;
     background:var(--paper-raised);
@@ -317,6 +406,64 @@
           </div>
         </div>
         <div class="photo-note">📷 <span><b>5 фото-слайдов:</b> ребёнок в рубашке · крупный план ткани · бирка состава · размерная сетка · инструкция по уходу</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Пример инфографического слайда</div>
+  <p class="slide-demo-caption">Так выглядит один из 5 фото-слайдов, которые получает покупатель</p>
+  <div class="slide-demo">
+    <div class="slide-body">
+      <div class="slide-photo">
+        <img src="shirt-after.jpg" alt="Инфографический слайд карточки: мальчик в школьной рубашке">
+        <div class="slide-dots">
+          <span class="dot dot--active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+      <div class="slide-utp">
+        <div class="utp-block">
+          <span class="utp-icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 7 L10 4 L16 7 L16 14 L10 17 L4 14 Z"/>
+              <path d="M4 7 L10 10 L16 7"/>
+              <path d="M10 10 L10 17"/>
+            </svg>
+          </span>
+          <div class="utp-text">
+            <div class="utp-title">Материал — 80% хлопок / 20% эластан</div>
+            <div class="utp-desc">Мягкая ткань, меньше мнётся и дольше держит форму после стирки</div>
+          </div>
+        </div>
+        <div class="utp-block">
+          <span class="utp-icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 3 L7 4.5 C7 5.5 8.3 6 10 6 C11.7 6 13 5.5 13 4.5 L13 3 L16 5 L14.5 8 L13 7 L13 17 L7 17 L7 7 L5.5 8 L4 5 Z"/>
+            </svg>
+          </span>
+          <div class="utp-text">
+            <div class="utp-title">Посадка — полуприлегающий крой</div>
+            <div class="utp-desc">Не сковывает движения, аккуратно смотрится каждый день</div>
+          </div>
+        </div>
+        <div class="utp-block">
+          <span class="utp-icon">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6">
+              <circle cx="10" cy="10" r="7"/>
+              <circle cx="7.8" cy="8.5" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="12.2" cy="8.5" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="7.8" cy="11.5" r="0.9" fill="currentColor" stroke="none"/>
+              <circle cx="12.2" cy="11.5" r="0.9" fill="currentColor" stroke="none"/>
+            </svg>
+          </span>
+          <div class="utp-text">
+            <div class="utp-title">Преимущество — застёжка на кнопках</div>
+            <div class="utp-desc">Ребёнок переоденется сам, без помощи взрослых</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
